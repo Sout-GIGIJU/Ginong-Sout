@@ -20,13 +20,9 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
-
-    - name: Copy files via SSH
-      run: |
-        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+        script: |
           cd /home/sout/dev/repositories/Ginong_Sout
           git pull
           cd ..
           chmod +x deploy.sh
           ./deploy.sh
-        EOF

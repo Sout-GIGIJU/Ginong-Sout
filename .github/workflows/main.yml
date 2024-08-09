@@ -21,8 +21,8 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         script: |
+          whoami
           cd /home/sout/dev/repositories/Ginong_Sout
           git pull
           cd ..
-          chmod +x deploy.sh
           ./deploy.sh

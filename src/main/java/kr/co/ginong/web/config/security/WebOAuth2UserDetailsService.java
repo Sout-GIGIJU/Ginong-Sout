@@ -62,16 +62,12 @@ public class WebOAuth2UserDetailsService implements OAuth2UserService<OAuth2User
 
         Member member = repository.findByEmail(email);
 
-        System.out.println("member: " + member);
+        // 임시 로그인 기능 삭제 후 DB에서 회원 정보 조회가 실패할 경우 Exception 던지기
         WebUserDetails userDetails = new WebUserDetails();
         if(member == null) {
-            userDetails.setAttributes(oAuth2User.getAttributes());
-            userDetails.setName(oAuth2User.getName());
-            userDetails.setUsername("임시로그인");
-            userDetails.setEmail(email);
-
-            return userDetails;
+            throw new OAuth2AuthenticationException("OAuth2AuthenticationException 가입되지 않은 회원 입니다 : " + email);
         }
+
 //        ----------------------security info--------------------
         List<MemberRole> roles = memberRoleRepository.findAllByMemberId(member.getId());
 

@@ -1,4 +1,4 @@
-name: Deploy for Ginong-Sout Web Application
+name: Deploy Ginong-Sout to Server
 
 on:
   push:
@@ -7,13 +7,15 @@ on:
 
 jobs:
   deploy:
-    name: Deploy
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
+    
+    # 리포지토리 코드 checkout
+    - name: Checkout
       uses: actions/checkout@v3
-      
-    - name: executing remote ssh commands using password
+
+    # SSH 접속 및 배포.sh 실행
+    - name: SSH Connection for Deploy
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
@@ -21,8 +23,5 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         script: |
-          whoami
-          cd /home/sout/dev/repositories/Ginong_Sout
-          git pull
-          cd ..
+          cd /home/sout/dev/repositories
           ./deploy.sh
